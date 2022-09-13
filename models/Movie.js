@@ -7,7 +7,7 @@ const movieSchema = new mongoose.Schema({
     trim: true,
   },
   releaseYear: {
-    type: Integer,
+    type: Number,
     required: true,
   },
   director: {
