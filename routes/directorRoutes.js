@@ -11,7 +11,7 @@ router.get('/directors', async (req, res) => {
       res.status(404).send({ message: 'No data' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 
@@ -25,7 +25,7 @@ router.get('/director/:id', async (req, res) => {
       res.status(404).send({ message: 'No results found' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 
@@ -39,7 +39,7 @@ router.post('/director', async (req, res) => {
       res.send({ message: 'Director could not be created' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 

@@ -12,7 +12,7 @@ router.get('/movies', async (req, res) => {
       res.status(404).send({ message: 'No data' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 
@@ -27,7 +27,7 @@ router.get('/movies/:id', async (req, res) => {
       res.status(404).send({ message: 'No results found' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 
@@ -42,7 +42,7 @@ router.post('/movie', async (req, res) => {
       res.send({ message: 'movie could not be created' })
     }
   } catch (e) {
-    res.send(e)
+    res.status(500).send(e)
   }
 })
 
