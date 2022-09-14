@@ -1,10 +1,17 @@
 const express = require('express')
 require('./db/Mongoose')
-
+const cors = require('cors')
 const directorRouter = require('./routes/directorRoutes')
 const movieRouter = require('./routes/movieRoutes')
+
 const app = express()
+
+//allow all origins
+app.use(cors())
+
+//express middleware to parse all data to json
 app.use(express.json())
+
 app.use(directorRouter)
 app.use(movieRouter)
 
