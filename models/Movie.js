@@ -16,6 +16,9 @@ const movieSchema = new mongoose.Schema({
   },
 })
 
+//middleware to validate update properties
+movieSchema.methods.validateUpdate = async function () {}
+
 const Movie = mongoose.model('Movie', movieSchema)
 
 module.exports = Movie
