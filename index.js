@@ -1,8 +1,8 @@
 const express = require('express')
 require('./db/Mongoose')
 const cors = require('cors')
-const directorRouter = require('./routes/directorRoutes')
-const movieRouter = require('./routes/movieRoutes')
+const directorRouter = require('./movie-api-routes/directorRoutes')
+const movieRouter = require('./movie-api-routes/movieRoutes')
 
 const app = express()
 
