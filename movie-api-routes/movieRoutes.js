@@ -1,6 +1,7 @@
 const express = require('express')
+const { validateMovieUpdate } = require('../middleware/validationMiddleware')
 const router = express.Router()
-const Movie = require('../models/movie')
+const Movie = require('../models/Movie')
 
 //get all movies
 router.get('/movies', async (req, res) => {
@@ -47,33 +48,9 @@ router.post('/movie', async (req, res) => {
 })
 
 //update movie by ID
-router.put('/movie/:id', async (req, res) => {
-  let allowedUpdates = ['name', 'release_year', 'director']
-  let updatesFromBody = Object.keys(req.body)
-
-  const isValidUpdate = updatesFromBody.every((update) =>
-    allowedUpdates.includes(update)
-  )
-
-  if (!isValidUpdate) {
-    return res.status(400).send({ error: 'Invalid update' })
-  }
-  try {
-    const { id } = req.params
-    const movie = await Movie.findById(id)
-
-    updatesFromBody.forEach((update) => {
-      movie[update] = req.body[update]
-    })
-    await movie.save()
-
-    if (!movie) {
-      return res.status(404).send({ message: 'Unable to update' })
-    }
-    res.status(200).send(movie)
-  } catch (error) {
-    res.status(500).send(error)
-  }
+router.put('/movie/:id', validateMovieUpdate, async (req, res) => {
+  const movie = await Movie.findById(req.params.id)
+  res.status(200).send(movie)
 })
 
 module.exports = router

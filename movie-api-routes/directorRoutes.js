@@ -1,4 +1,5 @@
 const express = require('express')
+const { validateDirectorUpdate } = require('../middleware/validationMiddleware')
 const router = express.Router()
 const Director = require('../models/Director')
 
@@ -44,33 +45,9 @@ router.post('/director', async (req, res) => {
 })
 
 //update director by ID
-router.put('/director/:id', async (req, res) => {
-  let allowedUpdates = ['first_name', 'last_name']
-  let updatesFromBody = Object.keys(req.body)
-
-  const isValidUpdate = updatesFromBody.every((update) =>
-    allowedUpdates.includes(update)
-  )
-
-  if (!isValidUpdate) {
-    return res.status(400).send({ error: 'Invalid update' })
-  }
-  try {
-    const { id } = req.params
-    const director = await Director.findById(id)
-
-    updatesFromBody.forEach((update) => {
-      director[update] = req.body[update]
-    })
-    await director.save()
-
-    if (!director) {
-      return res.status(404).send({ message: 'Unable to update' })
-    }
-    res.status(200).send(director)
-  } catch (error) {
-    res.status(500).send(error)
-  }
+router.put('/director/:id', validateDirectorUpdate, async (req, res) => {
+  const director = await Director.findById(req.params.id)
+  res.status(200).send(director)
 })
 
 module.exports = router
